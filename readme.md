@@ -1,6 +1,6 @@
 # TG 404 Site Checker
 
-* Version: 1.0
+* Version: 1.0.1
 * Author: Tenseg LLC
 * Author URI: http://www.tenseg.net
 
@@ -14,10 +14,6 @@ The basic configuration is in the `wp-config.php` file:
 define('TG_404_CHECK_SITE', 'http://example.com');
 ```
 
-If this is installed on a multisite network where each subsite needs a separate check site, you can use the option method, setting it via the WP-CLI:
-
-```bash
-wp --url=http://subsite.com option add tg_404_check_site http://example.com
-```
+If this is installed on a multisite network where each subsite needs a separate check site, you can use the settings method by visiting the *Settings > 404 Site Checker* page in the Dashboard. You can, of course, use the setting even on a single site install, in that configuration it really comes down to personal preference and security.
 
 If the define is in the config file that will override any setting, but if the define is not found a setting will be looked for. One of these is required for this plugin to function properly.

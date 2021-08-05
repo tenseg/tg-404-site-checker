@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: TG 404 Site Checker
-Plugin URI: https://www.tenseg.net
+Plugin URI: https://www.tenseg.net/blog/2021/08/05/checking-old-sites-on-404/
 Description: Check another site for the requested path and redirect there during 404.
-Version: 1.0
+Version: 1.0.1
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
 License: MIT License
@@ -25,6 +25,18 @@ class TG_404_Site_Checker {
 
 		// register actions
 		add_action( 'template_redirect', ['TG_404_Site_Checker', 'redirect_404_requests'], 1 );
+		add_action( 'admin_init', ['TG_404_Site_Checker', 'register_settings'] );
+		add_action( 'admin_menu', function () {
+			// add our configuration page
+			add_submenu_page(
+				'options-general.php',
+				'TG 404 Site Checker Settings',
+				'404 Site Checker',
+				'manage_options',
+				'tg_404_site_checker_settings',
+				['TG_404_Site_Checker', 'settings_page']
+			);
+		} );
 	}
 
 	/**
@@ -32,6 +44,7 @@ class TG_404_Site_Checker {
 	 *
 	 * Called by: template_redirect
 	 *
+	 * @access public
 	 * @return void
 	 */
 	public static function redirect_404_requests() {
@@ -49,6 +62,7 @@ class TG_404_Site_Checker {
 	/**
 	 * Gets the site to check against.
 	 *
+	 * @access private
 	 * @return string|bool the site to check against or false if none found
 	 */
 	private static function get_check_site() {
@@ -88,6 +102,7 @@ class TG_404_Site_Checker {
 	/**
 	 * Check the URL to see if it exists.
 	 *
+	 * @access private
 	 * @param string $url the site to check against
 	 * @return bool true if found, false if not or no url given
 	 */
@@ -114,6 +129,70 @@ class TG_404_Site_Checker {
 			return false;
 		}
 	}
+
+	/**
+	 * Register our settings.
+	 *
+	 * Called by: admin_init
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public static function register_settings() {
+		register_setting( 'tg-404-site-checker-group', 'tg_404_check_site' );
+	}
+
+	/**
+	 * Presents the settings page.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public static function settings_page() {
+		// get the current setting
+		$base = TG_404_Site_Checker::get_check_site();
+		if ( !$base ) {
+			$base = '';
+		}
+
+		?>
+		<div class="wrap">
+			<h1 class="wp-heading-inline"><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<p><em>404 Site Checker</em> can check the site you define here whenever a 404 is reached on this site. If it finds the requested page on that site it'll redirect the visitor there, if it does not find the requested page on that site your visitor will see the usual 404 page of this site.</p>
+			<hr class="wp-header-end">
+			<form method="post" action="options.php">
+			<?php settings_fields( 'tg-404-site-checker-group' )?>
+			<?php do_settings_sections( 'tg-404-site-checker-group' );?>
+			<table class="form-table" role="presentation">
+			<tr>
+			<th scope="row"><label for="tg_404_check_site"><?php _e( 'Site to Check' );?></label></th>
+			<td>
+			<?php if ( defined( 'TG_404_CHECK_SITE' ) ) {
+			echo "<em>$base</em>";
+			?>
+			<p class="description" id="home-description">
+				The address of the site to check against during 404 errors is defined in <em>wp-config.php</em> using <em>TG_404_CHECK_SITE</em>.
+			</p>
+			<?php
+} else {
+			?>
+			<input name="tg_404_check_site" type="text" id="base_url" value="<?php echo $base ?>" class="regular-text"/>
+			<p class="description" id="home-description">
+				<?php echo __( 'Enter the address of the site to check against during 404 errors.' ); ?>
+			</p>
+			<?php }?>
+			</td>
+			</tr>
+			</table>
+			<?php
+if ( !defined( 'TG_404_CHECK_SITE' ) ) {
+			submit_button();
+		}
+		?>
+			</form>
+		</div>
+		<?php
+}
 }
 
 TG_404_Site_Checker::init();

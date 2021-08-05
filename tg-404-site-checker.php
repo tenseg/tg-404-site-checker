@@ -54,17 +54,34 @@ class TG_404_Site_Checker {
 	private static function get_check_site() {
 		// first check for the definition in wp-config.php
 		if ( defined( 'TG_404_CHECK_SITE' ) && '' != constant( 'TG_404_CHECK_SITE' ) ) {
-			return constant( 'TG_404_CHECK_SITE' );
+			$base = constant( 'TG_404_CHECK_SITE' );
 		}
 
 		// next check for an option
-		if ( $opt = get_option( 'tg_404_check_site' ) ) {
+		if ( !isset( $base ) && $opt = get_option( 'tg_404_check_site' ) ) {
 			if ( '' != $opt ) {
-				return $opt;
+				$base = $opt;
 			}
 		}
 
-		// if no site found return false
+		// do some cleanup on the base if it was found
+		if ( isset( $base ) && '' != $base ) {
+			// check for trailing slash
+			// the request uri gives us this
+			$base = rtrim( $base, '/' );
+
+			// check for scheme
+			// add http if none found
+			$parsed = parse_url( $base );
+			if ( empty( $parsed['scheme'] ) ) {
+				$base = 'http://' . ltrim( $base, '/' );
+			}
+
+			// return the cleaned up base
+			return $base;
+		}
+
+		// if no base was found return false
 		return false;
 	}
 

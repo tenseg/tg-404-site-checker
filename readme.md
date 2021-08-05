@@ -1,6 +1,6 @@
 # TG 404 Site Checker
 
-* Version: 1.0.1
+* Version: 1.0.2
 * Author: Tenseg LLC
 * Author URI: http://www.tenseg.net
 

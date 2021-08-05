@@ -3,7 +3,7 @@
 Plugin Name: TG 404 Site Checker
 Plugin URI: https://www.tenseg.net/blog/2021/08/05/checking-old-sites-on-404/
 Description: Check another site for the requested path and redirect there during 404.
-Version: 1.0.1
+Version: 1.0.2
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
 License: MIT License
@@ -25,7 +25,10 @@ class TG_404_Site_Checker {
 
 		// register actions
 		add_action( 'template_redirect', ['TG_404_Site_Checker', 'redirect_404_requests'], 1 );
-		add_action( 'admin_init', ['TG_404_Site_Checker', 'register_settings'] );
+		add_action( 'admin_init', function () {
+			// register our settings
+			register_setting( 'tg-404-site-checker-group', 'tg_404_check_site' );
+		} );
 		add_action( 'admin_menu', function () {
 			// add our configuration page
 			add_submenu_page(
@@ -37,6 +40,7 @@ class TG_404_Site_Checker {
 				['TG_404_Site_Checker', 'settings_page']
 			);
 		} );
+		add_action( 'admin_notices', ['TG_404_Site_Checker', 'admin_notices'] );
 	}
 
 	/**
@@ -131,18 +135,6 @@ class TG_404_Site_Checker {
 	}
 
 	/**
-	 * Register our settings.
-	 *
-	 * Called by: admin_init
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public static function register_settings() {
-		register_setting( 'tg-404-site-checker-group', 'tg_404_check_site' );
-	}
-
-	/**
 	 * Presents the settings page.
 	 *
 	 * @access public
@@ -178,7 +170,7 @@ class TG_404_Site_Checker {
 			?>
 			<input name="tg_404_check_site" type="text" id="base_url" value="<?php echo $base ?>" class="regular-text"/>
 			<p class="description" id="home-description">
-				<?php echo __( 'Enter the address of the site to check against during 404 errors.' ); ?>
+				<?php echo __( 'Enter the address of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.' ); ?>
 			</p>
 			<?php }?>
 			</td>
@@ -193,6 +185,23 @@ if ( !defined( 'TG_404_CHECK_SITE' ) ) {
 		</div>
 		<?php
 }
+
+	/**
+	 * Shows our admin notices as needed.
+	 *
+	 * Called by: admin_notices
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public static function admin_notices() {
+		// only show a notice if there is no check site and we are not on our settngs screen
+		if ( !TG_404_Site_Checker::get_check_site() && 'settings_page_tg_404_site_checker_settings' !== get_current_screen()->id ) {
+			$page_url = get_admin_url( null, 'options-general.php?page=tg_404_site_checker_settings' );
+			add_settings_error( 'tg-404-site-checker_config_needed', 'tg-404-site-checker_warnings', "You must configure <a href='$page_url'>404 Site Checker</a> before it can redirect on 404.", 'error' );
+			settings_errors( 'tg-404-site-checker_config_needed' );
+		}
+	}
 }
 
 TG_404_Site_Checker::init();

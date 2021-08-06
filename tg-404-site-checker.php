@@ -33,7 +33,7 @@ class TG_404_Site_Checker {
 			// add our configuration page
 			add_submenu_page(
 				'options-general.php',
-				'TG 404 Site Checker Settings',
+				'404 Site Checker',
 				'404 Site Checker',
 				'manage_options',
 				'tg_404_site_checker_settings',

@@ -6,8 +6,8 @@ Description: Check another site for the requested path and redirect there during
 Version: 1.0.3
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
-License: MIT License
-Text Domain: tg-404-site-checker
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 /**

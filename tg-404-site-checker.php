@@ -3,7 +3,7 @@
 Plugin Name: TG 404 Site Checker
 Plugin URI: https://www.tenseg.net/blog/2021/08/05/checking-old-sites-on-404/
 Description: Check another site for the requested path and redirect there during 404.
-Version: 1.0.2
+Version: 1.0.3
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
 License: MIT License
@@ -33,7 +33,7 @@ class TG_404_Site_Checker {
 			// add our configuration page
 			add_submenu_page(
 				'options-general.php',
-				'404 Site Checker',
+				'404 Site Checker Settings',
 				'404 Site Checker',
 				'manage_options',
 				'tg_404_site_checker_settings',
@@ -53,8 +53,8 @@ class TG_404_Site_Checker {
 	 */
 	public static function redirect_404_requests() {
 		if ( is_404() ) {
-			if ( $base = TG_404_Site_Checker::get_check_site() ) {
-				$url = $base . $_SERVER['REQUEST_URI'];
+			if ( $check_site = TG_404_Site_Checker::get_check_site() ) {
+				$url = $check_site . $_SERVER['REQUEST_URI'];
 				if ( TG_404_Site_Checker::does_url_exist( $url ) ) {
 					wp_redirect( $url, 301 );
 					exit;
@@ -72,34 +72,34 @@ class TG_404_Site_Checker {
 	private static function get_check_site() {
 		// first check for the definition in wp-config.php
 		if ( defined( 'TG_404_CHECK_SITE' ) && '' != constant( 'TG_404_CHECK_SITE' ) ) {
-			$base = constant( 'TG_404_CHECK_SITE' );
+			$check_site = constant( 'TG_404_CHECK_SITE' );
 		}
 
 		// next check for an option
-		if ( !isset( $base ) && $opt = get_option( 'tg_404_check_site' ) ) {
+		if ( !isset( $check_site ) && $opt = get_option( 'tg_404_check_site' ) ) {
 			if ( '' != $opt ) {
-				$base = $opt;
+				$check_site = $opt;
 			}
 		}
 
-		// do some cleanup on the base if it was found
-		if ( isset( $base ) && '' != $base ) {
+		// do some cleanup on the check_site if it was found
+		if ( isset( $check_site ) && '' != $check_site ) {
 			// check for trailing slash
 			// the request uri gives us this
-			$base = rtrim( $base, '/' );
+			$check_site = rtrim( $check_site, '/' );
 
 			// check for scheme
 			// add http if none found
-			$parsed = parse_url( $base );
+			$parsed = parse_url( $check_site );
 			if ( empty( $parsed['scheme'] ) ) {
-				$base = 'http://' . ltrim( $base, '/' );
+				$check_site = 'http://' . ltrim( $check_site, '/' );
 			}
 
-			// return the cleaned up base
-			return $base;
+			// return the cleaned up check_site
+			return $check_site;
 		}
 
-		// if no base was found return false
+		// if no check site was found return false
 		return false;
 	}
 
@@ -142,9 +142,9 @@ class TG_404_Site_Checker {
 	 */
 	public static function settings_page() {
 		// get the current setting
-		$base = TG_404_Site_Checker::get_check_site();
-		if ( !$base ) {
-			$base = '';
+		$check_site = TG_404_Site_Checker::get_check_site();
+		if ( !$check_site ) {
+			$check_site = '';
 		}
 
 		?>
@@ -160,7 +160,7 @@ class TG_404_Site_Checker {
 			<th scope="row"><label for="tg_404_check_site"><?php _e( 'Site to Check' );?></label></th>
 			<td>
 			<?php if ( defined( 'TG_404_CHECK_SITE' ) ) {
-			echo "<em>$base</em>";
+			echo "<em>$check_site</em>";
 			?>
 			<p class="description" id="home-description">
 				The address of the site to check against during 404 errors is defined in <em>wp-config.php</em> using <em>TG_404_CHECK_SITE</em>.
@@ -168,7 +168,7 @@ class TG_404_Site_Checker {
 			<?php
 } else {
 			?>
-			<input name="tg_404_check_site" type="text" id="base_url" value="<?php echo $base ?>" class="regular-text"/>
+			<input name="tg_404_check_site" type="text" id="check_site_url" value="<?php echo $check_site ?>" class="regular-text"/>
 			<p class="description" id="home-description">
 				<?php echo __( 'Enter the address of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.' ); ?>
 			</p>

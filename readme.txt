@@ -2,7 +2,7 @@
 Contributors: Tenseg LLC
 Tags: 404, errors
 Tested up to: 5.8
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,13 @@ define('TG_404_CHECK_SITE', 'http://example.com');
 == Screenshots ==
 
 == Changelog ==
+
+= 1.0.4 - 2021-08-10 =
+
+* Now using WP HTTP library ([#3](https://bitbucket.org/tenseg/tg-404-site-checker/issues/3/using-curl-instead-of-http-api))
+* Properly escaping variables ([#4](https://bitbucket.org/tenseg/tg-404-site-checker/issues/4/variables-and-options-must-be-escaped-when))
+* Using a text domain ([#5](https://bitbucket.org/tenseg/tg-404-site-checker/issues/5/plugin-permalink-does-not-match-text))
+* Numerous other tweaks to support submission to WordPress.org and to unify reused code
 
 = 1.0.3 - 2021-08-07 =
 

@@ -116,18 +116,12 @@ class TG_404_Site_Checker {
 			return false;
 		}
 
-		// run a curl to check the url
-		$ch = curl_init();
-		curl_setopt( $ch, CURLOPT_URL, $url );
-		curl_setopt( $ch, CURLOPT_HEADER, true );
-		curl_setopt( $ch, CURLOPT_NOBODY, true );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_exec( $ch );
-		$httpcode = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		curl_close( $ch );
+		// check the url
+		$response = wp_remote_head( $url );
+		$httpcode = wp_remote_retrieve_response_code( $response );
 
-		// check the response code from the curl
-		if ( $httpcode < 400 ) { // anything below a 400 is presumed to be handled by the check site
+		// check the response code
+		if ( $httpcode < 400 ) { // below a 400 is presumed to be handled by the check site
 			return true;
 		} else {
 			return false;

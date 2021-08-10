@@ -137,8 +137,11 @@ class TG_404_Site_Checker {
 	public static function settings_page() {
 		// get the current setting
 		$check_site = TG_404_Site_Checker::get_check_site();
+		// ensure we have a string, and it is escaped if necesary
 		if ( !$check_site ) {
 			$check_site = '';
+		} else {
+			$check_site = esc_html( $check_site );
 		}
 
 		?>

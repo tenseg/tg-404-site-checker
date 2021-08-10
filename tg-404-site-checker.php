@@ -150,14 +150,8 @@ class TG_404_Site_Checker {
 	 * @return void
 	 */
 	public static function settings_page() {
-		// get the current setting
+		// get the check site setting
 		$check_site = TG_404_Site_Checker::get_check_site();
-		// ensure we have a string, and it is escaped if necesary
-		if ( !$check_site ) {
-			$check_site = '';
-		} else {
-			$check_site = esc_url( $check_site );
-		}
 
 		?>
 		<div class="wrap">
@@ -172,7 +166,7 @@ class TG_404_Site_Checker {
 			<th scope="row"><label for="tg_404_check_site"><?php _e( 'Site to Check' );?></label></th>
 			<td>
 			<?php if ( TG_404_Site_Checker::is_using_define() ) {
-			echo "<em>$check_site</em>";
+			echo '<em>' . esc_url( $check_site ) . '</em>';
 			?>
 			<p class="description" id="home-description">
 				<?php _e( 'The address of the site to check against during 404 errors is defined in <em>wp-config.php</em> using <em>TG_404_CHECK_SITE</em>.', 'tg-404-site-checker' )?>
@@ -180,7 +174,7 @@ class TG_404_Site_Checker {
 			<?php
 } else {
 			?>
-			<input name="tg_404_check_site" type="text" id="check_site_url" value="<?php echo $check_site ?>" class="regular-text"/>
+			<input name="tg_404_check_site" type="text" id="check_site_url" value="<?php echo esc_url( $check_site ) ?>" class="regular-text"/>
 			<p class="description" id="home-description">
 				<?php _e( 'Enter the address of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.', 'tg-404-site-checker' );?>
 			</p>

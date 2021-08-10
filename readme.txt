@@ -1,6 +1,8 @@
 === TG 404 Site Checker ===
-Contributors: Tenseg LLC
+Contributors: tenseg
 Tags: 404, errors
+Requires at least: 1.5.0
+Requires PHP: 5.3
 Tested up to: 5.8
 Stable tag: 1.0.4
 License: GPLv2 or later
@@ -24,9 +26,9 @@ define('TG_404_CHECK_SITE', 'http://example.com');
 
 2. Go to the Settings > 404 Site Checker screen in the Dashboard
 
-== Frequently Asked Questions ==
+== Development ==
 
-== Screenshots ==
+Development of this plugin occurs in its [Bitbucket repository](https://bitbucket.org/tenseg/tg-404-site-checker/).
 
 == Changelog ==
 

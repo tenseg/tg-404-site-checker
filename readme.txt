@@ -22,7 +22,7 @@ Once the plugin is installed and activated follow the on-screen prompt to set th
 
 If you are using this on a WordPress Multisite Network install where all sites should share one check site, you may prefer setting the check site in your `wp-config.php` file using the following code:
 
-define('TG_404_CHECK_SITE', 'https://example.com');
+> define('TG_404_CHECK_SITE', 'https://example.com');
 
 The plugin will always use what is defined in `wp-config.php` if it is found. So if you have a check site set both ways, the one set from the 404 Site Checker screen will be ignored.
 

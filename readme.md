@@ -3,7 +3,7 @@
 * Author: Tenseg LLC
 * Author URI: http://www.tenseg.net
 * Tested up to: 5.8
-* Stable tag: 1.0.4
+* Stable tag: 1.0.5
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,11 @@ The plugin will always use what is defined in `wp-config.php` if it is found. So
 
 These release notes are based on the issues resolved in our [TG 404 Site Checker issue tracker](https://bitbucket.org/tenseg//tg-404-site-checker/issues?status=resolved&sort=-updated_on). The numbers cited below refer to those issues.
 
+### 1.0.5 - 2021-08-11
+
+* Made assorted cleanup fixes to the page for this plugin on WordPress.org ([#6](https://bitbucket.org/tenseg/tg-404-site-checker/issues/6/readmetxt-fixes-for-plugins-directory-page))
+* Unified plugin name with settings screen title ([#7](https://bitbucket.org/tenseg/tg-404-site-checker/issues/7/remove-tg-from-plugin-name))
+* Added an icon for the plugin ([#9](https://bitbucket.org/tenseg/tg-404-site-checker/issues/9/custom-icon))
 ### 1.0.4 - 2021-08-10
 
 * Now using WP HTTP library ([#3](https://bitbucket.org/tenseg/tg-404-site-checker/issues/3/using-curl-instead-of-http-api))

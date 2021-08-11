@@ -2,7 +2,7 @@
 Contributors: tenseg
 Tags: 404, errors, redirection
 Tested up to: 5.8
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,12 @@ define('TG_404_CHECK_SITE', 'https://example.com');
 The plugin will always use what is defined in `wp-config.php` if it is found. So if you have a check site set both ways, the one set from the 404 Site Checker screen will be ignored.
 
 == Changelog ==
+
+= 1.0.5 - 2021-08-11 =
+
+* Made assorted cleanup fixes to the page for this plugin on WordPress.org ([#6](https://bitbucket.org/tenseg/tg-404-site-checker/issues/6/readmetxt-fixes-for-plugins-directory-page))
+* Unified plugin name with settings screen title ([#7](https://bitbucket.org/tenseg/tg-404-site-checker/issues/7/remove-tg-from-plugin-name))
+* Added an icon for the plugin ([#9](https://bitbucket.org/tenseg/tg-404-site-checker/issues/9/custom-icon))
 
 = 1.0.4 - 2021-08-10 =
 

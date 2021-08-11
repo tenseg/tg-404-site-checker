@@ -3,7 +3,7 @@
 Plugin Name: 404 Site Checker
 Plugin URI: https://www.tenseg.net/software/404sitechecker
 Description: Check another site for the requested path and redirect there during 404.
-Version: 1.0.4
+Version: 1.0.5
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
 License: GPLv2 or later

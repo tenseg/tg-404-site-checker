@@ -1,4 +1,4 @@
-# TG 404 Site Checker
+# 404 Site Checker
 
 * Author: Tenseg LLC
 * Author URI: http://www.tenseg.net

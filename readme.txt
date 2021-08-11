@@ -1,4 +1,4 @@
-=== TG 404 Site Checker ===
+=== 404 Site Checker ===
 Contributors: tenseg
 Tags: 404, errors
 Requires at least: 1.5.0

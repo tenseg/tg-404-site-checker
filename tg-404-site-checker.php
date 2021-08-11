@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: TG 404 Site Checker
+Plugin Name: 404 Site Checker
 Plugin URI: https://www.tenseg.net/software/404sitechecker
 Description: Check another site for the requested path and redirect there during 404.
 Version: 1.0.4

@@ -1,8 +1,6 @@
 === 404 Site Checker ===
 Contributors: tenseg
-Tags: 404, errors
-Requires at least: 1.5.0
-Requires PHP: 5.3
+Tags: 404, errors, redirection
 Tested up to: 5.8
 Stable tag: 1.0.4
 License: GPLv2 or later
@@ -16,19 +14,17 @@ This plugin will look at another site you specify whenever a 404 error occurs an
 
 This is particularly useful to silently redirect over to an archival copy of a website when a major redesign has been done.
 
+More information about this plugin can be found [on its homepage](https://www.tenseg.net/software/404sitechecker).
+
 == Installation ==
 
-Once the plugin is installed and activated follow the on-screen prompt to set the URL of the site to check against. You set this one of two ways:
+Once the plugin is installed and activated follow the on-screen prompt to set the URL of the site to check against. The prompt takes you to the Settings > 404 Site Checker screen in the Dashboard, which has a field for you to enter the URL of the site to check against.
 
-1. Add the following to `wp-config.php`:
+If you are using this on a WordPress Multisite Network install where all sites should share one check site, you may prefer setting the check site in your `wp-config.php` file using the following code:
 
-define('TG_404_CHECK_SITE', 'http://example.com');
+define('TG_404_CHECK_SITE', 'https://example.com');
 
-2. Go to the Settings > 404 Site Checker screen in the Dashboard
-
-== Development ==
-
-Development of this plugin occurs in its [Bitbucket repository](https://bitbucket.org/tenseg/tg-404-site-checker/).
+The plugin will always use what is defined in `wp-config.php` if it is found. So if you have a check site set both ways, the one set from the 404 Site Checker screen will be ignored.
 
 == Changelog ==
 

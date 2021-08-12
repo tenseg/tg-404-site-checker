@@ -37,7 +37,7 @@ class TG_404_Site_Checker {
 				__( '404 Site Checker Settings', 'tg-404-site-checker' ),
 				__( '404 Site Checker', 'tg-404-site-checker' ),
 				'manage_options',
-				'tg_404_site_checker_settings',
+				'tg_404_site_checker',
 				['TG_404_Site_Checker', 'settings_page']
 			);
 		} );
@@ -174,7 +174,7 @@ class TG_404_Site_Checker {
 			<?php
 } else {
 			?>
-			<input name="tg_404_check_site" type="text" id="check_site_url" value="<?php echo esc_url( $check_site ) ?>" class="regular-text"/>
+			<input name="tg_404_check_site" type="text" id="check_site_url" value="<?php echo esc_url( $check_site ) ?>" placeholder="https://example.com" class="regular-text"/>
 			<p class="description" id="home-description">
 				<?php _e( 'Enter the address of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.', 'tg-404-site-checker' );?>
 			</p>
@@ -202,8 +202,8 @@ if ( !TG_404_Site_Checker::is_using_define() ) {
 	 */
 	public static function admin_notices() {
 		// only show a notice if there is no check site and we are not on our settngs screen
-		if ( !TG_404_Site_Checker::get_check_site() && 'settings_page_tg_404_site_checker_settings' !== get_current_screen()->id ) {
-			$page_url = get_admin_url( null, 'options-general.php?page=tg_404_site_checker_settings' );
+		if ( !TG_404_Site_Checker::get_check_site() && 'settings_page_tg_404_site_checker' !== get_current_screen()->id ) {
+			$page_url = get_admin_url( null, 'options-general.php?page=tg_404_site_checker' );
 			add_settings_error( 'tg-404-site-checker_config_needed', 'tg-404-site-checker_warnings', sprintf( __( "You must configure <a href='%s'>404 Site Checker</a> before it can redirect on 404.", 'tg-404-site-checker' ), $page_url ), 'error' );
 			settings_errors( 'tg-404-site-checker_config_needed' );
 		}

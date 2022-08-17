@@ -2,7 +2,7 @@
 Contributors: tenseg
 Tags: 404, errors, redirection
 Tested up to: 6.0
-Stable tag: 1.0.5
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,10 @@ If you are using this on a WordPress Multisite Network install where all sites s
 The plugin will always use what is defined in `wp-config.php` if it is found. So if you have a check site set both ways, the one set from the 404 Site Checker screen will be ignored.
 
 == Changelog ==
+
+= 1.1 - 2022-08-17 =
+
+* Support an array of check sites in the define statement ([#12](https://bitbucket.org/tenseg/tg-404-site-checker/issues/12/support-multiple-check-sites))
 
 = 1.0.5 - 2021-08-11 =
 

@@ -2,8 +2,8 @@
 /*
 Plugin Name: 404 Site Checker
 Plugin URI: https://www.tenseg.net/software/404sitechecker
-Description: Check another site for the requested path and redirect there during 404.
-Version: 1.0.5
+Description: Check other sites for the requested path and redirect there during 404.
+Version: 1.1
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
 License: GPLv2 or later
@@ -54,11 +54,13 @@ class TG_404_Site_Checker {
 	 */
 	public static function redirect_404_requests() {
 		if ( is_404() ) {
-			if ( $check_site = TG_404_Site_Checker::get_check_site() ) {
-				$url = $check_site . $_SERVER['REQUEST_URI'];
-				if ( TG_404_Site_Checker::does_url_exist( $url ) ) {
-					wp_redirect( $url, 301 );
-					exit;
+			if ( $check_sites = TG_404_Site_Checker::get_check_sites() ) {
+				foreach ( $check_sites as $site ) {
+					$url = $site . $_SERVER['REQUEST_URI'];
+					if ( TG_404_Site_Checker::does_url_exist( $url ) ) {
+						wp_redirect( $url, 301 );
+						exit;
+					}
 				}
 			}
 		}
@@ -82,36 +84,43 @@ class TG_404_Site_Checker {
 	 * Gets the site to check against.
 	 *
 	 * @access private
-	 * @return string|bool the site to check against or false if none found
+	 * @return array|bool array of the sites to check against or false if none found
 	 */
-	private static function get_check_site() {
+	private static function get_check_sites() {
 		// first check for the definition in wp-config.php
 		if ( TG_404_Site_Checker::is_using_define() && '' != constant( 'TG_404_CHECK_SITE' ) ) {
-			$check_site = constant( 'TG_404_CHECK_SITE' );
+			$check_sites = constant( 'TG_404_CHECK_SITE' );
+			if ( !is_array( $check_sites ) ) {
+				$check_sites = explode( ',', $check_sites );
+			}
 		}
 
 		// next check for an option
-		if ( !isset( $check_site ) && $opt = get_option( 'tg_404_check_site' ) ) {
+		// TODO: explode on comma once we have gui settings
+		if ( !isset( $check_sites ) && $opt = get_option( 'tg_404_check_site' ) ) {
 			if ( '' != $opt ) {
-				$check_site = $opt;
+				$check_sites = [$opt];
 			}
 		}
 
-		// do some cleanup on the check_site if it was found
-		if ( isset( $check_site ) && '' != $check_site ) {
-			// check for trailing slash
-			// the request uri gives us this
-			$check_site = rtrim( $check_site, '/' );
+		// do some cleanup on the sites if any was found
+		if ( isset( $check_sites ) && '' != $check_sites ) {
+			foreach ( $check_sites as $index => $site ) {
+				// check for trailing slash
+				// the request uri gives us this
+				$site = rtrim( $site, '/' );
 
-			// check for scheme
-			// add http if none found
-			$parsed = parse_url( $check_site );
-			if ( empty( $parsed['scheme'] ) ) {
-				$check_site = 'http://' . ltrim( $check_site, '/' );
+				// check for scheme
+				// add http if none found
+				$parsed = parse_url( $site );
+				if ( empty( $parsed['scheme'] ) ) {
+					$site = 'http://' . ltrim( $site, '/' );
+				}
+				$check_sites[$index] = $site;
 			}
 
-			// return the cleaned up check_site
-			return $check_site;
+			// return the cleaned up check_sites
+			return $check_sites;
 		}
 
 		// if no check site was found return false
@@ -150,8 +159,12 @@ class TG_404_Site_Checker {
 	 * @return void
 	 */
 	public static function settings_page() {
-		// get the check site setting
-		$check_site = TG_404_Site_Checker::get_check_site();
+		// get the check sites setting
+		// TODO: figure out gui for adding multiple check sites
+		$check_sites = TG_404_Site_Checker::get_check_sites();
+		$site = ( count( $check_sites ) > 1 ? 'Sites' : 'Site' );
+		$address = ( count( $check_sites ) > 1 ? 'addresses' : 'address' );
+		$is = ( count( $check_sites ) > 1 ? 'are' : 'is' );
 
 		?>
 		<div class="wrap">
@@ -163,20 +176,20 @@ class TG_404_Site_Checker {
 			<?php do_settings_sections( 'tg-404-site-checker-group' );?>
 			<table class="form-table" role="presentation">
 			<tr>
-			<th scope="row"><label for="tg_404_check_site"><?php _e( 'Site to Check' );?></label></th>
+			<th scope="row"><label for="tg_404_check_site"><?php _e( $site . ' to Check' );?></label></th>
 			<td>
 			<?php if ( TG_404_Site_Checker::is_using_define() ) {
-			echo '<em>' . esc_url( $check_site ) . '</em>';
+			echo '<em>' . implode( ', ', $check_sites ) . '</em>';
 			?>
 			<p class="description" id="home-description">
-				<?php _e( 'The address of the site to check against during 404 errors is defined in <em>wp-config.php</em> using <em>TG_404_CHECK_SITE</em>.', 'tg-404-site-checker' )?>
+				<?php _e( 'The ' . $address . ' of the ' . strtolower( $site ) . ' to check against during 404 errors ' . $is . ' defined in <em>wp-config.php</em> using <em>TG_404_CHECK_SITE</em>.', 'tg-404-site-checker' )?>
 			</p>
 			<?php
 } else {
 			?>
-			<input name="tg_404_check_site" type="text" id="check_site_url" value="<?php echo esc_url( $check_site ) ?>" placeholder="https://example.com" class="regular-text"/>
+			<input name="tg_404_check_site" type="text" id="check_site_url" value="<?php echo implode( ', ', $check_sites ) ?>" placeholder="https://example.com" class="regular-text"/>
 			<p class="description" id="home-description">
-				<?php _e( 'Enter the address of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.', 'tg-404-site-checker' );?>
+				<?php _e( 'Enter the ' . $address . ' of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.', 'tg-404-site-checker' );?>
 			</p>
 			<?php }?>
 			</td>
@@ -202,7 +215,7 @@ if ( !TG_404_Site_Checker::is_using_define() ) {
 	 */
 	public static function admin_notices() {
 		// only show a notice if there is no check site and we are not on our settngs screen
-		if ( !TG_404_Site_Checker::get_check_site() && 'settings_page_tg_404_site_checker' !== get_current_screen()->id ) {
+		if ( !TG_404_Site_Checker::get_check_sites() && 'settings_page_tg_404_site_checker' !== get_current_screen()->id ) {
 			$page_url = get_admin_url( null, 'options-general.php?page=tg_404_site_checker' );
 			add_settings_error( 'tg-404-site-checker_config_needed', 'tg-404-site-checker_warnings', sprintf( __( "You must configure <a href='%s'>404 Site Checker</a> before it can redirect on 404.", 'tg-404-site-checker' ), $page_url ), 'error' );
 			settings_errors( 'tg-404-site-checker_config_needed' );

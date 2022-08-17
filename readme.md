@@ -25,6 +25,10 @@ The plugin will always use what is defined in `wp-config.php` if it is found. So
 
 These release notes are based on the issues resolved in our [TG 404 Site Checker issue tracker](https://bitbucket.org/tenseg//tg-404-site-checker/issues?status=resolved&sort=-updated_on). The numbers cited below refer to those issues.
 
+### 1.1 - 2022-08-17
+
+* Support an array of check sites in the define statement ([#12](https://bitbucket.org/tenseg/tg-404-site-checker/issues/12/support-multiple-check-sites))
+
 ### 1.0.5 - 2021-08-11
 
 * Made assorted cleanup fixes to the page for this plugin on WordPress.org ([#6](https://bitbucket.org/tenseg/tg-404-site-checker/issues/6/readmetxt-fixes-for-plugins-directory-page))

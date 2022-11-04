@@ -3,7 +3,7 @@
 Plugin Name: 404 Site Checker
 Plugin URI: https://www.tenseg.net/software/404sitechecker
 Description: Check other sites for the requested path and redirect there during 404.
-Version: 1.1
+Version: 1.1.1
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
 License: GPLv2 or later
@@ -84,7 +84,7 @@ class TG_404_Site_Checker {
 	 * Gets the site to check against.
 	 *
 	 * @access private
-	 * @return array|bool array of the sites to check against or false if none found
+	 * @return array array of the sites to check against
 	 */
 	private static function get_check_sites() {
 		// first check for the definition in wp-config.php
@@ -123,7 +123,7 @@ class TG_404_Site_Checker {
 			return $check_sites;
 		}
 
-		// if no check site was found return false
+		// if no check site was found return an empty string in an array
 		return [''];
 	}
 

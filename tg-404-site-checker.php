@@ -124,7 +124,7 @@ class TG_404_Site_Checker {
 		}
 
 		// if no check site was found return false
-		return false;
+		return [''];
 	}
 
 	/**

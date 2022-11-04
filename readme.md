@@ -3,7 +3,7 @@
 * Author: Tenseg LLC
 * Author URI: http://www.tenseg.net
 * Tested up to: 6.0
-* Stable tag: 1.0.5
+* Stable tag: 1.1.1
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,10 @@ The plugin will always use what is defined in `wp-config.php` if it is found. So
 ## Changelog
 
 These release notes are based on the issues resolved in our [TG 404 Site Checker issue tracker](https://bitbucket.org/tenseg//tg-404-site-checker/issues?status=resolved&sort=-updated_on). The numbers cited below refer to those issues.
+
+### 1.1.1 - 2022-11-04
+
+* Fix for fatal error seen by new users on settings page
 
 ### 1.1 - 2022-08-17
 

@@ -191,7 +191,8 @@ class TG_404_Site_Checker {
 			<p class="description" id="home-description">
 				<?php _e( 'Enter the ' . $address . ' of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.', 'tg-404-site-checker' );?>
 			</p>
-			<?php }?>
+			<?php
+}?>
 			</td>
 			</tr>
 			</table>
@@ -224,3 +225,17 @@ if ( !TG_404_Site_Checker::is_using_define() ) {
 }
 
 TG_404_Site_Checker::init();
+
+/**
+ * Plugin Updates
+ */
+function tg_404_site_checker_plugin_updates() {
+	require dirname( __FILE__ ) . '/plugin-updater/plugin-update-checker.php';
+	$myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+		'https://github.com/tenseg/tg-404-site-checker',
+		__FILE__,
+		'tg-404-site-checker'
+	);
+	$myUpdateChecker->setBranch( 'release' );
+}
+add_action( 'admin_init', 'tg_404_site_checker_plugin_updates' );

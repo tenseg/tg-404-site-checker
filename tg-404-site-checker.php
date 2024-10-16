@@ -237,5 +237,6 @@ function tg_404_site_checker_plugin_updates() {
 		'tg-404-site-checker'
 	);
 	$myUpdateChecker->setBranch( 'main' );
+	$myUpdateChecker->getVcsApi()->enableReleaseAssets();
 }
 add_action( 'admin_init', 'tg_404_site_checker_plugin_updates' );

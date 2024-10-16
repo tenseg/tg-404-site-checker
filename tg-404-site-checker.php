@@ -236,6 +236,7 @@ function tg_404_site_checker_plugin_updates() {
 		__FILE__,
 		'tg-404-site-checker'
 	);
+	$myUpdateChecker->setBranch( 'release' );
 	$myUpdateChecker->getVcsApi()->enableReleaseAssets();
 }
 add_action( 'admin_init', 'tg_404_site_checker_plugin_updates' );

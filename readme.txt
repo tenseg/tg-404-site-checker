@@ -2,7 +2,7 @@
 Contributors: tenseg
 Tags: 404, errors, redirection
 Tested up to: 6.6
-Stable tag: 1.1.3
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,11 +28,7 @@ The plugin will always use what is defined in `wp-config.php` if it is found. So
 
 == Changelog ==
 
-= 1.1.3 - 2024-10-16 =
-
-* Testing full Github update process
-
-= 1.1.2 - 2024-10-16 =
+= 1.2 - 2024-10-16 =
 
 * Move updates to Github
 

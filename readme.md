@@ -23,7 +23,7 @@ The plugin will always use what is defined in `wp-config.php` if it is found. So
 
 ## Changelog
 
-These release notes are based on the issues resolved in our [TG 404 Site Checker issue tracker](https://bitbucket.org/tenseg//tg-404-site-checker/issues?status=resolved&sort=-updated_on). The numbers cited below refer to those issues.
+These release notes are based on the issues resolved in our [TG 404 Site Checker issue tracker](https://bitbucket.org/tenseg/tg-404-site-checker/issues?status=new&status=open&status=submitted&is_spam=!spam). The numbers cited below refer to those issues.
 
 ### 1.2 - 2024-10-16
 

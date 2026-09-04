@@ -7,8 +7,21 @@ Version: 1.2
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: tg-404-site-checker
+
+TG 404 Site Checker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+any later version.
+
+TG 404 Site Checker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with TG 404 Site Checker. If not, see http://www.gnu.org/licenses/gpl-3.0.html.
  */
 
 /**
@@ -173,10 +186,10 @@ class TG_404_Site_Checker {
 			<hr class="wp-header-end">
 			<form method="post" action="options.php">
 			<?php settings_fields( 'tg-404-site-checker-group' )?>
-			<?php do_settings_sections( 'tg-404-site-checker-group' );?>
+			<?php do_settings_sections( 'tg-404-site-checker-group' ); ?>
 			<table class="form-table" role="presentation">
 			<tr>
-			<th scope="row"><label for="tg_404_check_site"><?php _e( $site . ' to Check' );?></label></th>
+			<th scope="row"><label for="tg_404_check_site"><?php _e( $site . ' to Check' ); ?></label></th>
 			<td>
 			<?php if ( TG_404_Site_Checker::is_using_define() ) {
 			echo '<em>' . implode( ', ', $check_sites ) . '</em>';
@@ -189,7 +202,7 @@ class TG_404_Site_Checker {
 			?>
 			<input name="tg_404_check_site" type="text" id="check_site_url" value="<?php echo implode( ', ', $check_sites ) ?>" placeholder="https://example.com" class="regular-text"/>
 			<p class="description" id="home-description">
-				<?php _e( 'Enter the ' . $address . ' of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.', 'tg-404-site-checker' );?>
+				<?php _e( 'Enter the ' . $address . ' of the site to check against during 404 errors.<br>Alternatively put a define statement for <em>TG_404_CHECK_SITE</em> in your <em>wp-config.php</em> file.', 'tg-404-site-checker' ); ?>
 			</p>
 			<?php
 }?>

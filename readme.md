@@ -1,11 +1,11 @@
 # 404 Site Checker
 
 * Author: Tenseg LLC
-* Author URI: http://www.tenseg.net
+* Author URI: <http://www.tenseg.net>
 * Tested up to: 6.6
 * Stable tag: 1.2
 * License: GPLv2 or later
-* License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* License URI: <http://www.gnu.org/licenses/gpl-3.0.html>
 
 When you get a 404 this will check the requested path at a site you define and redirect there if found rather than showing the `404.php` template from your theme.
 

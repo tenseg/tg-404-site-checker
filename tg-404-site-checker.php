@@ -24,6 +24,10 @@ You should have received a copy of the GNU General Public License
 along with TG 404 Site Checker. If not, see http://www.gnu.org/licenses/gpl-3.0.html.
  */
 
+if ( !defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * The class that encapsulates all the code of our plugin.
  */

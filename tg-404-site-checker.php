@@ -6,22 +6,19 @@ Description: Check other sites for the requested path and redirect there during 
 Version: 1.2
 Author: Tenseg LLC
 Author URI: https://www.tenseg.net
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License: The MIT License (MIT)
+License URI: https://opensource.org/licenses/MIT
 Text Domain: tg-404-site-checker
 
-TG 404 Site Checker is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-any later version.
-
-TG 404 Site Checker is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with TG 404 Site Checker. If not, see http://www.gnu.org/licenses/gpl-3.0.html.
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
  */
 
 if ( !defined( 'ABSPATH' ) ) {

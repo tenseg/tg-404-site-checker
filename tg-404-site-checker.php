@@ -10,15 +10,15 @@ License: The MIT License (MIT)
 License URI: https://opensource.org/licenses/MIT
 Text Domain: tg-404-site-checker
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
  */
 
 if ( !defined( 'ABSPATH' ) ) {
@@ -29,17 +29,17 @@ if ( !defined( 'ABSPATH' ) ) {
  * The class that encapsulates all the code of our plugin.
  */
 class TG_404_Site_Checker {
-	public static function init() {
-		static $is_initialized = false;
+	/**
+	 * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	 * Lifecycle
+	 * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	 * @ignore
+	 */
+	private $________LIFECYCLE________;
 
-		if ( $is_initialized ) {
-			return; // we only need to do this once
-		}
-
-		$is_initialized = true;
-
+	public function __construct() {
 		// register actions
-		add_action( 'template_redirect', ['TG_404_Site_Checker', 'redirect_404_requests'], 1 );
+		add_action( 'template_redirect', [$this, 'redirect_404_requests'], 1 );
 		add_action( 'admin_init', function () {
 			// register our settings
 			register_setting( 'tg-404-site-checker-group', 'tg_404_check_site' );
@@ -52,33 +52,19 @@ class TG_404_Site_Checker {
 				__( '404 Site Checker', 'tg-404-site-checker' ),
 				'manage_options',
 				'tg_404_site_checker',
-				['TG_404_Site_Checker', 'settings_page']
+				[$this, 'settings_page']
 			);
 		} );
-		add_action( 'admin_notices', ['TG_404_Site_Checker', 'admin_notices'] );
+		add_action( 'admin_notices', [$this, 'admin_notices'] );
 	}
 
 	/**
-	 * This action checks to see if we're in 404 and redirects as able.
-	 *
-	 * Called by: template_redirect
-	 *
-	 * @access public
-	 * @return void
+	 * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	 * Helpers
+	 * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	 * @ignore
 	 */
-	public static function redirect_404_requests() {
-		if ( is_404() ) {
-			if ( $check_sites = TG_404_Site_Checker::get_check_sites() ) {
-				foreach ( $check_sites as $site ) {
-					$url = $site . $_SERVER['REQUEST_URI'];
-					if ( TG_404_Site_Checker::does_url_exist( $url ) ) {
-						wp_redirect( $url, 301 );
-						exit;
-					}
-				}
-			}
-		}
-	}
+	private $________HELPERS________;
 
 	/**
 	 * Tells us if we're using the wp-config.php define instead of the DB setting.
@@ -86,7 +72,7 @@ class TG_404_Site_Checker {
 	 * @access private
 	 * @return bool true if wp-config, false if not
 	 */
-	private static function is_using_define() {
+	private function is_using_define() {
 		if ( defined( 'TG_404_CHECK_SITE' ) ) {
 			return true;
 		} else {
@@ -100,9 +86,9 @@ class TG_404_Site_Checker {
 	 * @access private
 	 * @return array array of the sites to check against
 	 */
-	private static function get_check_sites() {
+	private function get_check_sites() {
 		// first check for the definition in wp-config.php
-		if ( TG_404_Site_Checker::is_using_define() && '' != constant( 'TG_404_CHECK_SITE' ) ) {
+		if ( $this->is_using_define() && '' != constant( 'TG_404_CHECK_SITE' ) ) {
 			$check_sites = constant( 'TG_404_CHECK_SITE' );
 			if ( !is_array( $check_sites ) ) {
 				$check_sites = explode( ',', $check_sites );
@@ -145,10 +131,10 @@ class TG_404_Site_Checker {
 	 * Check the URL to see if it exists.
 	 *
 	 * @access private
-	 * @param string $url the site to check against
+	 * @param string $url the url to check
 	 * @return bool true if found, false if not or no url given
 	 */
-	private static function does_url_exist( $url ) {
+	private function does_url_exist( $url ) {
 		// return false if no url was given
 		if ( '' == $url ) {
 			return false;
@@ -167,15 +153,53 @@ class TG_404_Site_Checker {
 	}
 
 	/**
+	 * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	 * Redirection
+	 * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	 * @ignore
+	 */
+	private $________REDIRECTION________;
+
+	/**
+	 * This action checks to see if we're in 404 and redirects as able.
+	 *
+	 * Called by: template_redirect
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function redirect_404_requests() {
+		if ( is_404() ) {
+			if ( $check_sites = $this->get_check_sites() ) {
+				foreach ( $check_sites as $site ) {
+					$url = $site . $_SERVER['REQUEST_URI'];
+					if ( $this->does_url_exist( $url ) ) {
+						wp_redirect( $url, 301 );
+						exit;
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	 * GUI
+	 * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+	 * @ignore
+	 */
+	private $________GUI________;
+
+	/**
 	 * Presents the settings page.
 	 *
 	 * @access public
 	 * @return void
 	 */
-	public static function settings_page() {
+	public function settings_page() {
 		// get the check sites setting
 		// TODO: figure out gui for adding multiple check sites
-		$check_sites = TG_404_Site_Checker::get_check_sites();
+		$check_sites = $this->get_check_sites();
 		$site = ( count( $check_sites ) > 1 ? 'Sites' : 'Site' );
 		$address = ( count( $check_sites ) > 1 ? 'addresses' : 'address' );
 		$is = ( count( $check_sites ) > 1 ? 'are' : 'is' );
@@ -192,7 +216,7 @@ class TG_404_Site_Checker {
 			<tr>
 			<th scope="row"><label for="tg_404_check_site"><?php _e( $site . ' to Check' ); ?></label></th>
 			<td>
-			<?php if ( TG_404_Site_Checker::is_using_define() ) {
+			<?php if ( $this->is_using_define() ) {
 			echo '<em>' . implode( ', ', $check_sites ) . '</em>';
 			?>
 			<p class="description" id="home-description">
@@ -211,7 +235,7 @@ class TG_404_Site_Checker {
 			</tr>
 			</table>
 			<?php
-if ( !TG_404_Site_Checker::is_using_define() ) {
+if ( !$this->is_using_define() ) {
 			submit_button();
 		}
 		?>
@@ -228,9 +252,9 @@ if ( !TG_404_Site_Checker::is_using_define() ) {
 	 * @access public
 	 * @return void
 	 */
-	public static function admin_notices() {
+	public function admin_notices() {
 		// only show a notice if there is no check site and we are not on our settngs screen
-		if ( !TG_404_Site_Checker::get_check_sites() && 'settings_page_tg_404_site_checker' !== get_current_screen()->id ) {
+		if ( !$this->get_check_sites() && 'settings_page_tg_404_site_checker' !== get_current_screen()->id ) {
 			$page_url = get_admin_url( null, 'options-general.php?page=tg_404_site_checker' );
 			add_settings_error( 'tg-404-site-checker_config_needed', 'tg-404-site-checker_warnings', sprintf( __( "You must configure <a href='%s'>404 Site Checker</a> before it can redirect on 404.", 'tg-404-site-checker' ), $page_url ), 'error' );
 			settings_errors( 'tg-404-site-checker_config_needed' );
@@ -238,7 +262,7 @@ if ( !TG_404_Site_Checker::is_using_define() ) {
 	}
 }
 
-TG_404_Site_Checker::init();
+$tg_404_site_checker = new TG_404_Site_Checker();
 
 /**
  * Plugin Updates
